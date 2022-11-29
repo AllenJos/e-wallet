@@ -1,4 +1,4 @@
-package com.project.ewallet.model;
+package com.project.ewallet;
 
 public enum UserIdentifier {
     PAN,

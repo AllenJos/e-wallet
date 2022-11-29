@@ -1,15 +1,21 @@
 package com.project.ewallet.model;
 
+import com.project.ewallet.UserIdentifier;
+import com.project.ewallet.constants.UserConstants;
+
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -33,6 +39,8 @@ public class User implements UserDetails, Serializable {
 
     private String password;
 
+    private String authorities;
+
     @Enumerated(value = EnumType.STRING)
     private UserIdentifier userIdentifier;
 
@@ -51,7 +59,10 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        String[] allAuthorities = this.authorities.split(UserConstants.AUTHORITIES_DELIMITER);
+        return Arrays.stream(allAuthorities)
+                .map(x-> new SimpleGrantedAuthority(x))
+                .collect(Collectors.toList());
     }
 
     @Override

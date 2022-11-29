@@ -1,5 +1,6 @@
 package com.project.ewallet.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.ewallet.model.User;
 import com.project.ewallet.request.UserCreateRequest;
 import com.project.ewallet.service.UserService;
@@ -19,7 +20,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/user")
-    public void createUser(@RequestBody UserCreateRequest userCreateRequest){
+    public void createUser(@RequestBody UserCreateRequest userCreateRequest) throws JsonProcessingException {
         userService.create(userCreateRequest);
     }
 

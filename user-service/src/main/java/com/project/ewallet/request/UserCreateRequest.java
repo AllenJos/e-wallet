@@ -1,7 +1,7 @@
 package com.project.ewallet.request;
 
 import com.project.ewallet.model.User;
-import com.project.ewallet.model.UserIdentifier;
+import com.project.ewallet.UserIdentifier;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -37,14 +37,16 @@ public class UserCreateRequest {
     private String country;
 
     public User to() {
-        return User.builder()
+        User user =  User.builder()
                 .name(name)
                 .phoneNumber(phoneNumber)
                 .email(email)
+                .password(password)
                 .country(country)
                 .dob(dob)
                 .userIdentifier(userIdentifier)
                 .identifierValue(identifierValue)
                 .build();
+        return user;
     }
 }
