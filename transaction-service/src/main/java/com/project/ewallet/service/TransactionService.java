@@ -78,6 +78,7 @@ public class TransactionService implements UserDetailsService {
         jsonObject.put("sender", transaction.getSender());
         jsonObject.put("receiver", transaction.getReceiver());
         jsonObject.put("amount", transaction.getAmount());
+        jsonObject.put("transactionId", transaction.getTransactionId());
 
         kafkaTemplate.send(CommonConstants.TRANSACTION_CREATION_TOPIC, objectMapper.writeValueAsString(jsonObject));
 

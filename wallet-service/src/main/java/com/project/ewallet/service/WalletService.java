@@ -40,4 +40,25 @@ public class WalletService {
 
         walletRepository.save(wallet);
     }
+
+    @KafkaListener(topics = {CommonConstants.TRANSACTION_CREATION_TOPIC}, groupId = "group123")
+    public void updatedWalletForTransaction(String message) throws ParseException {
+        JSONObject data = (JSONObject) new JSONParser().parse(message);
+        String sender = (String) data.get("sender");
+        String receiver = (String) data.get("receiver");
+        Double amount = (Double) data.get("amount");
+        String transactionId = (String) data.get("transactionId");
+
+        Wallet senderWallet = walletRepository.findByPhoneNumber(sender);
+        Wallet receiverWallet = walletRepository.findByPhoneNumber(receiver);
+
+        if(senderWallet==null || receiverWallet==null || senderWallet.getBalance()<amount){
+            //mark this transaction as failed.
+        }
+
+        walletRepository.updateWallet(sender, 0-amount);
+        walletRepository.updateWallet(receiver, amount);
+
+        //TODO: produce an event for updating a transaction.
+    }
 }
