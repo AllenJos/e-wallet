@@ -27,6 +27,8 @@ public class Transaction {
 
     private String purpose;
 
+    private String transactionId;
+
     @Enumerated(value = EnumType.STRING)
     private TransactionStatus transactionStatus;
 

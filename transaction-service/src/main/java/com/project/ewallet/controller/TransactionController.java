@@ -1,5 +1,6 @@
 package com.project.ewallet.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.ewallet.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ public class TransactionController {
     @PostMapping("/transaction")
     public String initiateTransaction(@RequestParam("receiver") String receiver,
                                       @RequestParam("purpose") String purpose,
-                                      @RequestParam("amount") String amount){
+                                      @RequestParam("amount") String amount) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return transactionService.initiateTransaction(userDetails.getUsername(), receiver, purpose, amount);
