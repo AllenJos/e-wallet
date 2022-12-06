@@ -109,7 +109,7 @@ public class TransactionService implements UserDetailsService {
         String senderMessage = "Hi, your transaction with Id: " + transactionId + " is " + walletUpdateStatus;
         JSONObject senderEmailObj = new JSONObject();
         senderEmailObj.put("email", senderEmail);
-        senderEmailObj.put("senderMessage", senderMessage);
+        senderEmailObj.put("message", senderMessage);
 
         kafkaTemplate.send(CommonConstants.TRANSACTION_COMPLETED_TOPIC, objectMapper.writeValueAsString(senderEmailObj));
 
@@ -118,7 +118,7 @@ public class TransactionService implements UserDetailsService {
                     +sender+" in your wallet linked with phoneNumber "+receiver;
             JSONObject receiverEmailObj = new JSONObject();
             receiverEmailObj.put("email" ,receiverEmail);
-            receiverEmailObj.put("receiverMessage", receiverMessage);
+            receiverEmailObj.put("message", receiverMessage);
 
             kafkaTemplate.send(CommonConstants.TRANSACTION_COMPLETED_TOPIC, objectMapper.writeValueAsString(receiverEmailObj));
         }
